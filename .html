@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alezify Y7 — My Global Life: 24 Hours Around the World</title>
+    <style>
+        /* ============================================
+           ALEZIFY KID-FRIENDLY THEME
+           ============================================ */
+        :root {
+            --primary: #0E0D3C;
+            --secondary: #D3F7FD;
+            --accent: #E2B2FF;
+            --white: #FFFFFF;
+            --yellow: #FFD166;
+            --green: #06D6A0;
+            --red: #EF476F;
+            --orange: #F78C6B;
+            --font-main: 'Trebuchet MS', 'Comic Sans MS', sans-serif;
+            --font-display: 'Arial Rounded MT Bold', 'Helvetica Rounded', sans-serif;
+            --radius: 20px;
+            --transition: all 0.3s ease;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-main);
+            background-color: var(--primary);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 { font-family: var(--font-display); font-weight: bold; }
+
+        /* --- PROGRESS BAR --- */
+        #progress-bar {
+            position: fixed; top: 0; left: 0; height: 5px;
+            background: linear-gradient(90deg, var(--yellow), var(--accent), var(--green));
+            width: 0%; z-index: 2000; transition: width 0.1s ease;
+        }
+
+        /* --- NAV --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 1rem 4%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(14, 13, 60, 0.97); backdrop-filter: blur(10px);
+            z-index: 1000; border-bottom: 3px solid var(--accent);
+        }
+        .logo { font-family: var(--font-display); font-size: 1.6rem; color: var(--secondary); text-decoration: none; }
+        .logo span { color: var(--accent); }
+        nav ul { display: flex; list-style: none; gap: 1rem; flex-wrap: wrap; }
+        nav a { color: var(--secondary); text-decoration: none; font-weight: bold; transition: var(--transition); font-size: 0.85rem; padding: 0.3rem 0.5rem; border-radius: 5px; }
+        nav a:hover, nav a.active { color: var(--primary); background: var(--yellow); }
+
+        /* --- HERO --- */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 0 5%; margin-top: 60px;
+            background: radial-gradient(circle at center, rgba(226, 178, 255, 0.25) 0%, transparent 70%);
+            position: relative;
+        }
+        .hero h1 { font-size: 4.5rem; margin-bottom: 0.5rem; color: var(--yellow); text-shadow: 4px 4px 0px var(--accent); }
+        .hero h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 1.5rem; }
+        .hero p { font-size: 1.3rem; max-width: 800px; color: var(--secondary); margin-bottom: 2rem; }
+        .floating-emoji { font-size: 3.5rem; position: absolute; animation: float 4s infinite ease-in-out; z-index: 1; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-30px) rotate(10deg); } }
+
+        .btn { padding: 1rem 2.5rem; background-color: var(--accent); color: var(--primary); border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold; cursor: pointer; transition: var(--transition); font-family: var(--font-display); box-shadow: 0 6px 0 var(--primary); }
+        .btn:hover { transform: translateY(-4px); box-shadow: 0 10px 0 var(--primary); }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary); }
+
+        /* --- SECTIONS --- */
+        .section { padding: 6rem 5%; display: flex; flex-direction: column; align-items: center; position: relative; min-height: 80vh; }
+        .section-alt { background: rgba(226, 178, 255, 0.05); }
+        .section-title { font-size: 2.8rem; color: var(--secondary); margin-bottom: 0.5rem; text-align: center; }
+        .section-subtitle { text-align: center; color: var(--white); opacity: 0.9; margin-bottom: 3rem; max-width: 800px; font-size: 1.15rem; }
+        .highlight { color: var(--yellow); font-weight: bold; }
+
+        /* --- 1. SMARTPHONE JOURNEY --- */
+        .journey-container { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; max-width: 1000px; margin-bottom: 3rem; }
+        .journey-step {
+            background: var(--primary); border: 4px solid var(--secondary); border-radius: var(--radius);
+            padding: 1.5rem; width: 160px; text-align: center; cursor: pointer;
+            transition: var(--transition); position: relative;
+        }
+        .journey-step.active { background: var(--accent); border-color: var(--accent); transform: scale(1.1); z-index: 10; box-shadow: 0 0 25px var(--accent); }
+        .journey-step .step-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .journey-step .step-label { font-weight: bold; font-size: 0.9rem; color: var(--secondary); }
+        .journey-step.active .step-label { color: var(--primary); }
+        
+        .detail-box {
+            background: rgba(211, 247, 253, 0.1); border: 3px dashed var(--secondary);
+            border-radius: var(--radius); padding: 2rem; width: 100%; max-width: 900px;
+            min-height: 250px; display: flex; flex-direction: column; justify-content: center;
+            text-align: left;
+        }
+        .detail-box h3 { color: var(--yellow); font-size: 1.8rem; margin-bottom: 1rem; text-align: center; }
+        .detail-box p { font-size: 1.1rem; margin-bottom: 1rem; }
+
+        .arrow-chain {
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+            gap: 0.5rem; font-weight: bold; color: var(--yellow); margin: 1rem 0;
+            font-size: 1rem; background: rgba(0,0,0,0.3); padding: 1rem; border-radius: 10px;
+        }
+        .arrow-chain span { color: var(--secondary); background: var(--primary); padding: 5px 10px; border-radius: 5px; border: 1px solid var(--secondary); font-size: 0.9rem; }
+
+        /* --- 2. INTERACTIVE MAP --- */
+        .map-wrapper {
+            position: relative; width: 100%; max-width: 1000px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg') no-repeat center center;
+            background-size: contain; aspect-ratio: 16/9;
+            border: 5px solid var(--secondary); border-radius: var(--radius);
+            background-color: rgba(211, 247, 253, 0.05);
+        }
+        .map-dot {
+            position: absolute; width: 30px; height: 30px; background-color: var(--yellow);
+            border-radius: 50%; cursor: pointer; transition: var(--transition);
+            box-shadow: 0 0 20px var(--yellow); display: flex; justify-content: center; align-items: center;
+            font-size: 0.7rem; font-weight: bold; color: var(--primary); border: 2px solid var(--primary);
+        }
+        .map-dot:hover { transform: scale(1.5); background-color: var(--accent); }
+        .map-dot::after {
+            content: attr(data-label); position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
+            background: var(--primary); color: var(--secondary); padding: 5px 10px; border-radius: 8px;
+            font-size: 0.8rem; white-space: nowrap; opacity: 0; pointer-events: none;
+            transition: var(--transition); border: 2px solid var(--secondary);
+        }
+        .map-dot:hover::after { opacity: 1; top: -50px; }
+        .map-info {
+            margin-top: 2rem; padding: 2rem; background: rgba(226, 178, 255, 0.1);
+            border-radius: var(--radius); text-align: center; min-height: 120px; width: 100%; max-width: 900px;
+            border: 2px solid var(--accent);
+        }
+        .map-info h3 { color: var(--accent); font-size: 2rem; margin-bottom: 0.5rem; }
+
+        /* --- 3. FOOD JOURNEY --- */
+        .food-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; width: 100%; max-width: 1000px; margin-bottom: 2rem; }
+        .food-card { background: rgba(211, 247, 253, 0.05); border: 3px solid var(--secondary); padding: 1.5rem; border-radius: var(--radius); text-align: center; cursor: pointer; transition: var(--transition); }
+        .food-card:hover { transform: translateY(-5px); border-color: var(--yellow); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .food-card.active { border-color: var(--accent); background: rgba(226, 178, 255, 0.15); }
+        .food-card .food-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+        .food-card h4 { color: var(--secondary); font-size: 1.2rem; }
+        .food-detail { width: 100%; max-width: 900px; background: rgba(0,0,0,0.3); padding: 2rem; border-radius: var(--radius); border: 2px solid var(--accent); min-height: 150px; }
+
+        /* --- 4. MEDIA SPREAD --- */
+        .media-container { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 900px; }
+        .media-network { display: flex; justify-content: space-around; align-items: center; width: 100%; margin: 2rem 0; flex-wrap: wrap; gap: 1rem; }
+        .media-node { width: 100px; height: 100px; border-radius: 50%; background: var(--primary); border: 3px solid var(--secondary); display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 0.7rem; text-align: center; transition: var(--transition); }
+        .media-node.active { background: var(--accent); color: var(--primary); border-color: var(--accent); transform: scale(1.1); }
+        .media-node .m-icon { font-size: 2rem; }
+        .media-node .m-label { font-weight: bold; font-size: 0.7rem; }
+        .media-arrow { color: var(--yellow); font-size: 1.5rem; }
+
+        /* --- 5. CULTURE & IDENTITY LAYERS --- */
+        .identity-layers { position: relative; width: 100%; max-width: 600px; height: 400px; margin: 2rem auto; display: flex; justify-content: center; align-items: center; }
+        .layer-circle { position: absolute; border-radius: 50%; display: flex; justify-content: center; align-items: center; text-align: center; transition: var(--transition); cursor: pointer; border: 2px solid var(--secondary); }
+        .layer-circle:hover { transform: scale(1.05); box-shadow: 0 0 20px var(--yellow); }
+        .layer-personal { width: 120px; height: 120px; background: var(--accent); color: var(--primary); font-weight: bold; font-size: 0.9rem; z-index: 4; }
+        .layer-local { width: 200px; height: 200px; background: rgba(226, 178, 255, 0.3); border: 2px dashed var(--secondary); z-index: 3; }
+        .layer-national { width: 300px; height: 300px; background: rgba(211, 247, 253, 0.15); border: 2px dashed var(--secondary); z-index: 2; }
+        .layer-global { width: 400px; height: 400px; background: rgba(6, 214, 160, 0.1); border: 2px solid var(--green); z-index: 1; }
+        .layer-label { position: absolute; font-size: 0.8rem; font-weight: bold; color: var(--secondary); }
+        .layer-label-personal { bottom: 40%; }
+        .layer-label-global { top: 5%; }
+
+        /* --- 6. DOMINO EFFECT --- */
+        .domino-container { width: 100%; max-width: 1000px; display: flex; flex-direction: column; align-items: center; }
+        .mood-meter { display: flex; justify-content: space-around; width: 100%; max-width: 600px; background: rgba(0,0,0,0.4); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2rem; border: 2px solid var(--secondary); }
+        .mood-card { text-align: center; }
+        .mood-card .mood-emoji { font-size: 4rem; display: block; margin-bottom: 0.5rem; transition: var(--transition); }
+        .mood-card .mood-label { font-weight: bold; font-size: 1rem; color: var(--secondary); }
+        .domino-chain { display: flex; justify-content: center; align-items: center; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+        .domino-box { padding: 1rem 0.8rem; background: var(--primary); border: 3px solid var(--secondary); border-radius: var(--radius); text-align: center; width: 120px; cursor: pointer; transition: var(--transition); }
+        .domino-box .d-icon { font-size: 2rem; }
+        .domino-box .d-label { font-size: 0.8rem; font-weight: bold; margin-top: 0.3rem; }
+        .domino-box:hover { transform: translateY(-5px); border-color: var(--yellow); }
+        .domino-box.broken { background: var(--red); border-color: var(--red); animation: shake 0.5s; }
+        .domino-box.delayed { background: var(--orange); border-color: var(--orange); }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .game-msg { font-size: 1.1rem; text-align: center; color: var(--yellow); font-weight: bold; min-height: 40px; }
+
+        /* --- 7. X-FACTOR --- */
+        .xfactor-visual { display: flex; justify-content: center; align-items: center; gap: 1.5rem; flex-wrap: wrap; margin: 2rem 0; }
+        .xfactor-bubble { background: var(--primary); border: 3px solid var(--secondary); padding: 1rem 1.5rem; border-radius: 50px; font-weight: bold; cursor: pointer; transition: var(--transition); }
+        .xfactor-bubble:hover { background: var(--secondary); color: var(--primary); transform: scale(1.1); }
+        .xfactor-bubble.active { background: var(--accent); border-color: var(--accent); color: var(--primary); }
+        .xfactor-arrow { font-size: 2rem; color: var(--yellow); }
+
+        /* --- 8. WHAT IF SIMULATOR --- */
+        .whatif-toggle { display: flex; gap: 1rem; margin-bottom: 2rem; }
+        .toggle-btn { padding: 1rem 2rem; background: var(--primary); border: 3px solid var(--secondary); color: var(--secondary); border-radius: 50px; cursor: pointer; font-weight: bold; font-family: var(--font-main); font-size: 1rem; transition: var(--transition); }
+        .toggle-btn.active { background: var(--secondary); color: var(--primary); }
+        .whatif-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; width: 100%; max-width: 1000px; }
+        .whatif-card { background: rgba(211, 247, 253, 0.05); border: 3px solid var(--secondary); padding: 1.5rem; border-radius: var(--radius); text-align: center; transition: var(--transition); }
+        .whatif-card.lost { opacity: 0.3; border-color: var(--red); filter: grayscale(1); }
+        .whatif-card .w-icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .whatif-card h4 { color: var(--yellow); font-size: 1.1rem; margin-bottom: 0.5rem; }
+
+        /* --- 9. QUIZ --- */
+        .quiz-container { width: 100%; max-width: 800px; display: flex; flex-direction: column; gap: 1.5rem; }
+        .quiz-question-box { background: rgba(226, 178, 255, 0.1); padding: 1.5rem; border-radius: var(--radius); border: 3px solid var(--accent); }
+        .quiz-question-box h3 { color: var(--yellow); margin-bottom: 1rem; font-size: 1.2rem; }
+        .options-grid { display: grid; grid-template-columns: 1fr; gap: 0.8rem; }
+        .option-btn { padding: 0.8rem; background: var(--primary); color: var(--white); border: 3px solid var(--secondary); border-radius: 10px; font-size: 1rem; cursor: pointer; text-align: left; transition: var(--transition); font-family: var(--font-main); }
+        .option-btn:hover { background: var(--secondary); color: var(--primary); }
+        .option-btn.correct { background: var(--green); color: var(--primary); border-color: var(--green); }
+        .option-btn.wrong { background: var(--red); color: var(--white); border-color: var(--red); }
+        .quiz-feedback { margin-top: 0.8rem; font-weight: bold; font-size: 1rem; color: var(--yellow); }
+
+        /* --- 10. REFLECTION --- */
+        .reflection-box { width: 100%; max-width: 800px; background: rgba(211, 247, 253, 0.05); border: 3px solid var(--secondary); padding: 2rem; border-radius: var(--radius); text-align: center; }
+        .reflection-box textarea { width: 100%; height: 150px; padding: 1rem; border-radius: 10px; border: 2px solid var(--accent); background: var(--primary); color: var(--white); font-family: var(--font-main); font-size: 1.1rem; resize: vertical; margin-bottom: 1rem; }
+        .reflection-box button { padding: 1rem 2.5rem; background: var(--accent); color: var(--primary); border: none; border-radius: 50px; font-weight: bold; font-family: var(--font-display); font-size: 1.1rem; cursor: pointer; transition: var(--transition); }
+        .reflection-box button:hover { transform: scale(1.05); }
+        .word-count { font-size: 0.9rem; color: var(--secondary); margin-bottom: 1rem; text-align: right; }
+
+        /* --- 11. CHECKLIST --- */
+        .checklist { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 1rem; }
+        .check-item { display: flex; align-items: center; gap: 1rem; background: rgba(211, 247, 253, 0.05); padding: 1rem; border-radius: 10px; border: 2px solid var(--secondary); cursor: pointer; transition: var(--transition); }
+        .check-item:hover { border-color: var(--yellow); }
+        .check-item .box { width: 30px; height: 30px; border: 3px solid var(--secondary); border-radius: 5px; display: flex; justify-content: center; align-items: center; font-size: 1.2rem; color: var(--green); font-weight: bold; transition: var(--transition); }
+        .check-item.completed .box { background: var(--green); border-color: var(--green); color: var(--primary); }
+        .check-item.completed span { text-decoration: line-through; opacity: 0.7; }
+        .check-item span { font-size: 1rem; }
+
+        /* --- 12. GLOSSARY --- */
+        .glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; width: 100%; max-width: 1000px; }
+        .glossary-card { background: rgba(211, 247, 253, 0.05); border: 2px solid var(--secondary); padding: 1rem; border-radius: 10px; cursor: help; transition: var(--transition); }
+        .glossary-card:hover { border-color: var(--yellow); background: rgba(255, 209, 102, 0.1); }
+        .glossary-card h4 { color: var(--yellow); font-size: 1.1rem; margin-bottom: 0.3rem; }
+        .glossary-card p { font-size: 0.9rem; opacity: 0; max-height: 0; transition: all 0.3s ease; overflow: hidden; }
+        .glossary-card:hover p { opacity: 1; max-height: 100px; margin-top: 0.5rem; }
+
+        /* --- BACK TO TOP --- */
+        #back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 50px; height: 50px; background: var(--accent); color: var(--primary); border: none; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: none; z-index: 999; box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: var(--transition); }
+        #back-to-top:hover { transform: scale(1.1); }
+        #back-to-top.show { display: block; }
+
+        /* --- FOOTER --- */
+        footer { padding: 2rem; background: var(--black); text-align: center; border-top: 4px solid var(--accent); }
+        footer p { color: var(--secondary); opacity: 0.7; font-size: 0.9rem; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav ul { display: none; }
+            .journey-step { width: 100%; }
+            .domino-box { width: 45%; }
+            .mood-meter { flex-direction: column; gap: 1rem; }
+            .layer-circle { width: 100% !important; height: auto !important; aspect-ratio: 1; }
+            .identity-layers { height: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PROGRESS BAR -->
+    <div id="progress-bar"></div>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <a href="#" class="logo">Alezify<span>.</span></a>
+        <ul>
+            <li><a href="#journey">Journey</a></li>
+            <li><a href="#map">World Map</a></li>
+            <li><a href="#food">Food</a></li>
+            <li><a href="#media">Media</a></li>
+            <li><a href="#identity">Identity</a></li>
+            <li><a href="#domino">Domino</a></li>
+            <li><a href="#xfactor">X-Factor</a></li>
+            <li><a href="#whatif">What If?</a></li>
+            <li><a href="#quiz">Quiz</a></li>
+            <li><a href="#reflection">Reflection</a></li>
+            <li><a href="#glossary">Glossary</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="floating-emoji" style="top: 15%; left: 8%; animation-delay: 0s;">📱</div>
+        <div class="floating-emoji" style="top: 25%; right: 10%; animation-delay: 1s;">🚢</div>
+        <div class="floating-emoji" style="bottom: 20%; left: 12%; animation-delay: 2s;">🏭</div>
+        <div class="floating-emoji" style="bottom: 25%; right: 8%; animation-delay: 1.5s;">🌍</div>
+        <div class="floating-emoji" style="top: 50%; left: 5%; animation-delay: 0.5s;">📦</div>
+        <div class="floating-emoji" style="top: 60%; right: 5%; animation-delay: 2.5s;">🚚</div>
+        <div class="floating-emoji" style="top: 10%; right: 30%; animation-delay: 3s;">✈️</div>
+        <h1>My Global Life:</h1>
+        <h2>24 Hours Around the World</h2>
+        <p>Choose one normal day and explore how 5 moments connect you with other countries, people, and cultures. Let's see how global our lives really are!</p>
+        <button class="btn" onclick="document.getElementById('journey').scrollIntoView({behavior: 'smooth'});">Start the Adventure! 🚀</button>
+    </section>
+
+    <!-- 1. SMARTPHONE JOURNEY -->
+    <section id="journey" class="section section-alt">
+        <h2 class="section-title">The Journey of a Smartphone</h2>
+        <p class="section-subtitle">Click each step to see how a phone is built around the world. Every object has a passport!</p>
+        
+        <div class="journey-container">
+            <div class="journey-step" onclick="showJourney('materials', this)">
+                <div class="step-icon">⛏️</div>
+                <div class="step-label">1. Materials</div>
+            </div>
+            <div class="journey-step" onclick="showJourney('components', this)">
+                <div class="step-icon">🔌</div>
+                <div class="step-label">2. Components</div>
+            </div>
+            <div class="journey-step" onclick="showJourney('assembly', this)">
+                <div class="step-icon">🏭</div>
+                <div class="step-label">3. Assembly</div>
+            </div>
+            <div class="journey-step" onclick="showJourney('transport', this)">
+                <div class="step-icon">🚚</div>
+                <div class="step-label">4. Transport</div>
+            </div>
+            <div class="journey-step" onclick="showJourney('you', this)">
+                <div class="step-icon">🤳</div>
+                <div class="step-label">5. You!</div>
+            </div>
+        </div>
+
+        <div class="detail-box" id="journey-detail">
+            <h3>👆 Click a step above!</h3>
+            <p>See how a simple object becomes a global story.</p>
+        </div>
+    </section>
+
+    <!-- 2. INTERACTIVE MAP -->
+    <section id="map" class="section">
+        <h2 class="section-title">Where Does Our Stuff Come From?</h2>
+        <p class="section-subtitle">Click the glowing dots on the map to see what different continents make. <span class="highlight">Asia makes the most (50%)!</span></p>
+        
+        <div class="map-wrapper">
+            <div class="map-dot" style="top: 35%; left: 25%;" data-label="North America (22%)" onclick="updateMapInfo('North America', '22%', 'Designs cool software and makes advanced parts for phones, planes, and computers.')">NA</div>
+            <div class="map-dot" style="top: 42%; left: 48%;" data-label="Europe (22%)" onclick="updateMapInfo('Europe', '22%', 'Makes high-quality machines, cars, and luxury items like watches.')">EU</div>
+            <div class="map-dot" style="top: 45%; left: 70%;" data-label="Asia (50%)" onclick="updateMapInfo('Asia', '50%', 'The biggest factory in the world! Makes phones, clothes, toys, and computer chips.')">AS</div>
+            <div class="map-dot" style="top: 65%; left: 55%;" data-label="Africa (2%)" onclick="updateMapInfo('Africa', '2%', 'Provides raw materials like metals and minerals used in batteries.')">AF</div>
+            <div class="map-dot" style="top: 75%; left: 85%;" data-label="Australia (1%)" onclick="updateMapInfo('Australia', '1%', 'Supplies raw materials like iron and wool.')">AU</div>
+            <div class="map-dot" style="top: 70%; left: 30%;" data-label="South America (6%)" onclick="updateMapInfo('South America', '6%', 'Grows lots of food like coffee and supplies metals like copper.')">SA</div>
+        </div>
+        
+        <div class="map-info" id="map-info">
+            <h3>Click a dot!</h3>
+            <p>Discover who makes what.</p>
+        </div>
+    </section>
+
+    <!-- 3. FOOD JOURNEY -->
+    <section id="food" class="section section-alt">
+        <h2 class="section-title">Your Breakfast's Global Journey</h2>
+        <p class="section-subtitle">Pick a breakfast item to see how it travels from farm to plate!</p>
+        
+        <div class="food-grid">
+            <div class="food-card" onclick="showFood('banana', this)">
+                <div class="food-icon">🍌</div>
+                <h4>Banana</h4>
+            </div>
+            <div class="food-card" onclick="showFood('chocolate', this)">
+                <div class="food-icon">🍫</div>
+                <h4>Chocolate</h4>
+            </div>
+            <div class="food-card" onclick="showFood('cereal', this)">
+                <div class="food-icon">🥣</div>
+                <h4>Cereal</h4>
+            </div>
+            <div class="food-card" onclick="showFood('tea', this)">
+                <div class="food-icon">🍵</div>
+                <h4>Tea</h4>
+            </div>
+        </div>
+
+        <div class="food-detail" id="food-detail">
+            <h3 style="color: var(--yellow); text-align: center; margin-bottom: 1rem;">👆 Click a breakfast item!</h3>
+            <p style="text-align: center; opacity: 0.7;">See the journey from farm to your plate.</p>
+        </div>
+    </section>
+
+    <!-- 4. MEDIA SPREAD -->
+    <section id="media" class="section">
+        <h2 class="section-title">How Trends Spread Globally</h2>
+        <p class="section-subtitle">A song, game, or dance trend can travel around the world in days. Click a node to see how it spreads!</p>
+        
+        <div class="media-container">
+            <div class="media-network">
+                <div class="media-node" id="mn-1" onclick="activateMediaNode(1)">
+                    <span class="m-icon">🇰🇷</span>
+                    <span class="m-label">South Korea</span>
+                </div>
+                <div class="media-arrow">→</div>
+                <div class="media-node" id="mn-2" onclick="activateMediaNode(2)">
+                    <span class="m-icon">📱</span>
+                    <span class="m-label">Social Media</span>
+                </div>
+                <div class="media-arrow">→</div>
+                <div class="media-node" id="mn-3" onclick="activateMediaNode(3)">
+                    <span class="m-icon">🌍</span>
+                    <span class="m-label">Global Fans</span>
+                </div>
+                <div class="media-arrow">→</div>
+                <div class="media-node" id="mn-4" onclick="activateMediaNode(4)">
+                    <span class="m-icon">🏠</span>
+                    <span class="m-label">Your Home</span>
+                </div>
+            </div>
+            <div class="food-detail" id="media-detail" style="text-align: center;">
+                <h3 style="color: var(--yellow); margin-bottom: 1rem;">👆 Click a node to see how a trend spreads!</h3>
+                <p>From local artists to global fans, media connects us all.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CULTURE & IDENTITY LAYERS -->
+    <section id="identity" class="section section-alt">
+        <h2 class="section-title">Overlapping Identities</h2>
+        <p class="section-subtitle">We all have different layers of identity. Global connections help shape who we are. Hover over the circles!</p>
+        
+        <div class="identity-layers">
+            <div class="layer-circle layer-global">
+                <span class="layer-label layer-label-global">🌐 Global</span>
+            </div>
+            <div class="layer-circle layer-national">
+                <span class="layer-label" style="top: 10%;">🌍 National</span>
+            </div>
+            <div class="layer-circle layer-local">
+                <span class="layer-label" style="top: 15%;">📍 Local</span>
+            </div>
+            <div class="layer-circle layer-personal">
+                <span>🏠 Personal</span>
+            </div>
+        </div>
+        
+        <div style="width: 100%; max-width: 700px; background: rgba(211, 247, 253, 0.1); padding: 1.5rem; border-radius: var(--radius); margin-top: 1rem; text-align: center;">
+            <p style="font-size: 1rem;"><strong>Teacher Tip:</strong> One world does not mean one culture. Connection helps us share differences as well as similarities. Think about how a global trend has changed how you express your <em>own</em> identity.</p>
+        </div>
+    </section>
+
+    <!-- 6. DOMINO EFFECT -->
+    <section id="domino" class="section">
+        <h2 class="section-title">The Domino Effect</h2>
+        <p class="section-subtitle">A global system is connected. If one link breaks, it changes lives and moods! <strong>Click any box to break the chain!</strong></p>
+        
+        <div class="domino-container">
+            <div class="mood-meter">
+                <div class="mood-card" id="mood-shop">
+                    <span class="mood-emoji">😃</span>
+                    <span class="mood-label">Shop Owner</span>
+                </div>
+                <div class="mood-card" id="mood-you">
+                    <span class="mood-emoji">😃</span>
+                    <span class="mood-label">You (The Customer)</span>
+                </div>
+            </div>
+
+            <div class="domino-chain">
+                <div class="domino-box" id="d1" onclick="triggerDomino(0)">
+                    <div class="d-icon">⛏️</div>
+                    <div class="d-label">Supplier</div>
+                </div>
+                <div class="domino-box" id="d2" onclick="triggerDomino(1)">
+                    <div class="d-icon">🏭</div>
+                    <div class="d-label">Factory</div>
+                </div>
+                <div class="domino-box" id="d3" onclick="triggerDomino(2)">
+                    <div class="d-icon">🚢</div>
+                    <div class="d-label">Port</div>
+                </div>
+                <div class="domino-box" id="d4" onclick="triggerDomino(3)">
+                    <div class="d-icon">🏪</div>
+                    <div class="d-label">Shop</div>
+                </div>
+                <div class="domino-box" id="d5" onclick="triggerDomino(4)">
+                    <div class="d-icon">👤</div>
+                    <div class="d-label">You</div>
+                </div>
+            </div>
+
+            <div class="game-msg" id="game-msg">Everything is running smoothly! Everyone is happy.</div>
+            <button class="btn" onclick="resetDomino()" style="margin-top: 1rem; font-size: 1rem;">Fix the Chain! 🔄</button>
+        </div>
+    </section>
+
+    <!-- 7. X-FACTOR -->
+    <section id="xfactor" class="section section-alt">
+        <h2 class="section-title">X-Factor: Small Choices, Big Effects</h2>
+        <p class="section-subtitle">The network changes when people make one tiny decision. Click a choice to see its ripple effect!</p>
+        
+        <div class="xfactor-visual" id="xfactor-visual">
+            <div class="xfactor-bubble" onclick="showXFactor('repair', this)">🔧 Repair instead of replace</div>
+            <div class="xfactor-bubble" onclick="showXFactor('recycle', this)">♻️ Recycle old devices</div>
+            <div class="xfactor-bubble" onclick="showXFactor('local', this)">🏪 Buy from local shops</div>
+            <div class="xfactor-bubble" onclick="showXFactor('transport', this)">🚲 Use greener transport</div>
+        </div>
+        
+        <div class="detail-box" id="xfactor-detail">
+            <h3>👆 Click a choice above!</h3>
+            <p>See how your small decisions ripple through the global network.</p>
+        </div>
+    </section>
+
+    <!-- 8. WHAT IF SIMULATOR -->
+    <section id="whatif" class="section">
+        <h2 class="section-title">What If Global Connections Disappeared?</h2>
+        <p class="section-subtitle">Imagine your day without global links. Toggle the connections on and off to see what would change!</p>
+        
+        <div class="whatif-toggle">
+            <button class="toggle-btn active" id="btn-global-on" onclick="setGlobalStatus(true)">🌐 Global ON</button>
+            <button class="toggle-btn" id="btn-global-off" onclick="setGlobalStatus(false)">🚫 Global OFF</button>
+        </div>
+        
+        <div class="whatif-grid" id="whatif-grid">
+            <div class="whatif-card" data-global="true">
+                <div class="w-icon">🍌</div>
+                <h4>Fresh Fruit</h4>
+                <p>Bananas, mangoes, and avocados would disappear.</p>
+            </div>
+            <div class="whatif-card" data-global="true">
+                <div class="w-icon">📱</div>
+                <h4>Smartphones</h4>
+                <p>No phones, computers, or video games.</p>
+            </div>
+            <div class="whatif-card" data-global="true">
+                <div class="w-icon">👟</div>
+                <h4>Clothing & Shoes</h4>
+                <p>Most of your wardrobe would vanish.</p>
+            </div>
+            <div class="whatif-card" data-global="true">
+                <div class="w-icon">🎵</div>
+                <h4>Global Music & Media</h4>
+                <p>No K-pop, anime, or global video games.</p>
+            </div>
+            <div class="whatif-card" data-global="true">
+                <div class="w-icon">🏥</div>
+                <h4>Medicines</h4>
+                <p>Many medicines use ingredients from around the world.</p>
+            </div>
+            <div class="whatif-card" data-global="true">
+                <div class="w-icon">🏫</div>
+                <h4>Knowledge & Learning</h4>
+                <p>No internet, no global news, no online learning.</p>
+            </div>
+        </div>
+        
+        <div class="game-msg" id="whatif-msg" style="margin-top: 2rem; font-size: 1.2rem;">With global connections, your day is rich and full of variety.</div>
+    </section>
+
+    <!-- 9. QUIZ -->
+    <section id="quiz" class="section section-alt">
+        <h2 class="section-title">The Big Global Quiz!</h2>
+        <p class="section-subtitle">Let's see if you understand how the global chain works. Answer these 5 questions!</p>
+        
+        <div class="quiz-container" id="quiz-container">
+            <!-- Questions injected by JS -->
+        </div>
+        <div class="game-msg" id="quiz-score" style="margin-top: 2rem;"></div>
+    </section>
+
+    <!-- 10. STUDENT CHECKLIST -->
+    <section id="checklist" class="section">
+        <h2 class="section-title">Student Checklist</h2>
+        <p class="section-subtitle">Track your progress! Click each item as you complete it.</p>
+        
+        <div class="checklist" id="checklist-container">
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>5 distinct moments from one ordinary day</span>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>Product / supply chain (e.g., trainers, backpack)</span>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>Food / global trade (e.g., breakfast ingredient)</span>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>Media / global trend (song, game, sport)</span>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>Culture, communication or identity</span>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>At least two explanations with steps or arrows</span>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>Comment on visible / less-visible culture or identity</span>
+            </div>
+            <div class="check-item" onclick="toggleCheck(this)">
+                <div class="box">✓</div>
+                <span>Final reflection: "What would change most, and why?"</span>
+            </div>
+6        </div>
+    </section>
+
+    <!-- 11. FINAL REFLECTION -->
+    <section id="reflection" class="section section-alt">
+        <h2 class="section-title">Final Reflection</h2>
+        <div class="reflection-box">
+            <h3>"If global connections disappeared from my day, what would change most, and why?"</h3>
+            <p style="color: var(--secondary); margin-bottom: 1.5rem; font-size: 1rem;">Type your answer below. Think about your shoes, your food, or the media you enjoy.</p>
+            <textarea id="reflection-text" placeholder="If global connections disappeared, I would miss..." oninput="updateWordCount()"></textarea>
+            <div class="word-count" id="word-count">0 words</div>
+            <button onclick="submitReflection()">Submit Answer 🚀</button>
+            <div id="reflection-msg" style="margin-top: 1rem; color: var(--green); font-weight: bold;"></div>
+        </div>
+    </section>
+
+    <!-- 12. GLOSSARY -->
+    <section id="glossary" class="section">
+        <h2 class="section-title">Glossary of Global Terms</h2>
+        <p class="section-subtitle">Hover over a card to reveal its definition!</p>
+        
+        <div class="glossary-grid">
+            <div class="glossary-card">
+                <h4>Supply Chain</h4>
+                <p>The steps a product goes through from raw materials to your hands.</p>
+            </div>
+            <div class="glossary-card">
+                <h4>Redundancy</h4>
+                <p>Having more than one path or backup so the system can recover from problems.</p>
+            </div>
+            <div class="glossary-card">
+                <h4>Specialization</h4>
+                <p>When different places focus on the work they do best.</p>
+            </div>
+            <div class="glossary-card">
+                <h4>Global Interconnection</h4>
+                <p>Different parts of the world depending on one another.</p>
+            </div>
+            <div class="glossary-card">
+                <h4>Resilience</h4>
+                <p>The ability of a network to survive shocks and keep working.</p>
+            </div>
+            <div class="glossary-card">
+                <h4>Interdependence</h4>
+                <p>When countries or people rely on each other to function.</p>
+            </div>
+            <div class="glossary-card">
+                <h4>Logistics</h4>
+                <p>The process of planning and moving goods around the world.</p>
+            </div>
+            <div class="glossary-card">
+                <h4>Identity</h4>
+                <p>The qualities, beliefs, and experiences that make you who you are.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BACK TO TOP -->
+    <button id="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>Alezify — Built To Rise.</p>
+        <p style="color: var(--yellow); margin-top: 0.5rem;">Designed by Omar Sanad | Year 7 Global Project</p>
+        <p style="margin-top: 1rem;">&copy; 2026 Alezify. All rights reserved. Global Interconnection for Kids.</p>
+    </footer>
+
+    <script>
+        // ============================================
+        // PROGRESS BAR & SCROLL SPY
+        // ============================================
+        const progressBar = document.getElementById('progress-bar');
+        const backToTop = document.getElementById('back-to-top');
+        const navLinks = document.querySelectorAll('nav a');
+
+        window.addEventListener('scroll', () => {
+            // Progress bar
+            const scrollTop = document.documentElement.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = scrollPercent + '%';
+
+            // Back to top button
+            if (scrollTop > 500) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+
+            // Scroll spy
+            const sections = document.querySelectorAll('.section, .hero');
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollTop >= sectionTop) {
+                    current = section.getAttribute('id');
+                }
+            });
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // ============================================
+        // 1. SMARTPHONE JOURNEY
+        // ============================================
+        const journeyData = {
+            materials: {
+                icon: '⛏️', title: '1. Raw Materials',
+                text: 'It starts with digging! We mine metals like lithium and cobalt from the earth in places like Africa and South America. This is the "Resource Stage".',
+                chain: ['Mine in Africa', 'Raw Metal', 'Ship to Factory']
+            },
+            components: {
+                icon: '🔌', title: '2. Components',
+                text: 'The raw materials are turned into tiny parts! The screens come from Japan and the computer chips are made in Taiwan.',
+                chain: ['Japan (Screens)', 'Taiwan (Chips)', 'South Korea (Memory)']
+            },
+            assembly: {
+                icon: '🏭', title: '3. Assembly',
+                text: 'All the parts are brought together in giant factories in Asia (like China and Vietnam) where workers and robots put the phone together. This is "Specialization" - places doing what they do best!',
+                chain: ['China', 'Vietnam', 'India']
+            },
+            transport: {
+                icon: '🚚', title: '4. Transport',
+                text: 'The finished phones are packed into boxes and put on massive cargo ships or airplanes to travel across the ocean! 90% of world trade is carried by sea.',
+                chain: ['Cargo Ship', 'Airplane', 'Delivery Truck']
+            },
+            you: {
+                icon: '🤳', title: '5. You!',
+                text: 'Finally, the phone arrives at a store or your door. You unbox it and start using it, completing the global journey! Now it\'s your turn to reuse and recycle it when you are done.',
+                chain: ['Shop', 'Your Door', 'You!']
+            }
+        };
+
+        function showJourney(step, element) {
+            document.querySelectorAll('.journey-step').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            const data = journeyData[step];
+            let chainHTML = '<div class="arrow-chain">';
+            data.chain.forEach((s, i) => {
+                chainHTML += `<span>${s}</span>`;
+                if (i < data.chain.length - 1) chainHTML += `<strong> ➔ </strong>`;
+            });
+            chainHTML += '</div>';
+            document.getElementById('journey-detail').innerHTML = `
+                <h3>${data.icon} ${data.title}</h3>
+                <p>${data.text}</p>
+                ${chainHTML}
+            `;
+        }
+
+        // ============================================
+        // 2. MAP
+        // ============================================
+        function updateMapInfo(region, percent, text) {
+            document.getElementById('map-info').innerHTML = `<h3>${region} — ${percent}</h3><p>${text}</p>`;
+        }
+
+        // ============================================
+        // 3. FOOD JOURNEY
+        // ============================================
+        const foodData = {
+            banana: { icon: '🍌', title: 'The Banana Journey', text: 'Bananas grow in tropical climates like Ecuador and Costa Rica. Workers pick them green, they travel in refrigerated ships, and they ripen on the way to your supermarket!', chain: ['Ecuador', 'Refrigerated Ship', 'Supermarket', 'You'] },
+            chocolate: { icon: '🍫', title: 'The Chocolate Journey', text: 'Cocoa beans come from Ghana and Ivory Coast. They are dried, shipped to Europe or Asia, roasted, and turned into chocolate. Sugar comes from Brazil!', chain: ['Ghana (Cocoa)', 'Europe (Roasting)', 'Factory', 'You'] },
+            cereal: { icon: '🥣', title: 'The Cereal Journey', text: 'Wheat is grown in the USA, Canada, or Europe. It is processed into flakes, vitamins are added, and the box is printed with materials from forests!', chain: ['Farm', 'Processing Plant', 'Box Factory', 'You'] },
+            tea: { icon: '🍵', title: 'The Tea Journey', text: 'Tea leaves come from Kenya, India, or Sri Lanka. They are dried, blended, and shipped around the world. Every cup has a global story!', chain: ['Kenya (Leaves)', 'Sri Lanka', 'Blending', 'You'] }
+        };
+
+        function showFood(type, element) {
+            document.querySelectorAll('.food-card').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            const data = foodData[type];
+            let chainHTML = '<div class="arrow-chain">';
+            data.chain.forEach((s, i) => {
+                chainHTML += `<span>${s}</span>`;
+                if (i < data.chain.length - 1) chainHTML += `<strong> ➔ </strong>`;
+            });
+            chainHTML += '</div>';
+            document.getElementById('food-detail').innerHTML = `
+                <h3>${data.icon} ${data.title}</h3>
+                <p>${data.text}</p>
+                ${chainHTML}
+            `;
+        }
+
+        // ============================================
+        // 4. MEDIA SPREAD
+        // ============================================
+        const mediaData = {
+            1: { title: 'Where It Starts', text: 'An artist or creator in South Korea makes a song, game, or video. This is the creative origin point.' },
+            2: { title: 'Spreading Online', text: 'Social media algorithms push the content to global audiences. Fans share, remix, and make their own versions.' },
+            3: { title: 'Global Fans', text: 'People in the USA, Brazil, Europe, and Africa become fans. They create fan art, dance covers, and translations.' },
+            4: { title: 'Your Home', text: 'The trend reaches you through streaming, TikTok, YouTube, or games. You become part of a global community of fans!' }
+        };
+
+        function activateMediaNode(id) {
+            document.querySelectorAll('.media-node').forEach(n => n.classList.remove('active'));
+            document.getElementById(`mn-${id}`).classList.add('active');
+            const data = mediaData[id];
+            document.getElementById('media-detail').innerHTML = `
+                <h3 style="color: var(--yellow); margin-bottom: 1rem;">${data.title}</h3>
+                <p>${data.text}</p>
+            `;
+        }
+
+        // ============================================
+        // 5. CULTURE & IDENTITY
+        // ============================================
+        // (Hover effects handled by CSS)
+
+        // ============================================
+        // 6. DOMINO EFFECT
+        // ============================================
+        function triggerDomino(index) {
+            const chain = ['d1', 'd2', 'd3', 'd4', 'd5'];
+            const msg = document.getElementById('game-msg');
+            const shopMood = document.querySelector('#mood-shop .mood-emoji');
+            const youMood = document.querySelector('#mood-you .mood-emoji');
+
+            chain.forEach(id => document.getElementById(id).classList.remove('broken', 'delayed'));
+            shopMood.innerText = '😃';
+            youMood.innerText = '😃';
+            msg.innerText = "Uh oh! You broke a link in the chain!";
+            msg.style.color = 'var(--yellow)';
+
+            document.getElementById(chain[index]).classList.add('broken');
+
+            let delay = 600;
+            for (let i = index + 1; i < chain.length; i++) {
+                setTimeout(() => {
+                    document.getElementById(chain[i]).classList.add('delayed');
+                }, delay);
+                delay += 600;
+            }
+
+            setTimeout(() => {
+                shopMood.innerText = '😟';
+                msg.innerText = "The Shop has no products to sell! The Shop Owner is sad.";
+                msg.style.color = 'var(--red)';
+            }, delay);
+
+            setTimeout(() => {
+                youMood.innerText = '😡';
+                msg.innerText = "The Shop has no products, so YOU can't buy what you want! Everyone is upset! This is why we need redundancy (backup paths).";
+                msg.style.color = 'var(--red)';
+            }, delay + 800);
+        }
+
+        function resetDomino() {
+            ['d1', 'd2', 'd3', 'd4', 'd5'].forEach(id => {
+                document.getElementById(id).classList.remove('broken', 'delayed');
+            });
+            document.querySelector('#mood-shop .mood-emoji').innerText = '😃';
+            document.querySelector('#mood-you .mood-emoji').innerText = '😃';
+            document.getElementById('game-msg').innerText = "Everything is running smoothly! Everyone is happy.";
+            document.getElementById('game-msg').style.color = 'var(--yellow)';
+        }
+
+        // ============================================
+        // 7. X-FACTOR
+        // ============================================
+        const xfactorData = {
+            repair: { title: '🔧 Repair Instead of Replace', text: 'If you repair a broken phone, you reduce demand for new materials. This means less mining, less shipping, and less waste. Small choice → Big effect!' },
+            recycle: { title: '♻️ Recycle Old Devices', text: 'Recycling metals like gold and copper from old phones means fewer new mines are needed. Communities in Ghana and Chile benefit from less pollution.' },
+            local: { title: '🏪 Buy From Local Shops', text: 'Buying locally can reduce the shipping distance. It supports local jobs and cuts down on transport emissions.' },
+            transport: { title: '🚲 Use Greener Transport', text: 'Walking, cycling, or taking public transport reduces the carbon footprint of your daily commute. This helps global climate goals!' }
+        };
+
+        function showXFactor(type, element) {
+            document.querySelectorAll('.xfactor-bubble').forEach(el => el.classList.remove('active'));
+            element.classList.add('active');
+            const data = xfactorData[type];
+            document.getElementById('xfactor-detail').innerHTML = `
+                <h3>${data.title}</h3>
+                <p>${data.text}</p>
+            `;
+        }
+
+        // ============================================
+        // 8. WHAT IF SIMULATOR
+        // ============================================
+        function setGlobalStatus(isOn) {
+            document.getElementById('btn-global-on').classList.toggle('active', isOn);
+            document.getElementById('btn-global-off').classList.toggle('active', !isOn);
+            const cards = document.querySelectorAll('.whatif-card');
+            const msg = document.getElementById('whatif-msg');
+            
+            cards.forEach(card => {
+                if (isOn) {
+                    card.classList.remove('lost');
+                } else {
+                    card.classList.add('lost');
+                }
+            });
+
+            if (isOn) {
+                msg.innerText = "With global connections, your day is rich and full of variety.";
+                msg.style.color = "var(--green)";
+            } else {
+                msg.innerText = "Without global connections, your day would be VERY different. Most things you use come from far away!";
+                msg.style.color = "var(--red)";
+            }
+        }
+
+        // ============================================
+        // 9. QUIZ
+        // ============================================
+        const quizData = [
+            { q: 'What is the "Secret Weapon" that makes a supply chain strong?', options: ['Having only one path', 'Having more than one path (Redundancy)', 'Using only airplanes'], correct: 1 },
+            { q: 'If a port closes, what happens to the shop and the customer?', options: ['Nothing changes', 'The shop gets more products', 'The shop gets fewer products and the customer notices'], correct: 2 },
+            { q: 'Which continent has the biggest share of the global supply chain (about 50%)?', options: ['North America', 'Asia', 'Europe'], correct: 1 },
+            { q: 'Where do cocoa beans (for chocolate) often come from?', options: ['Ghana and Ivory Coast', 'Canada and Norway', 'Japan and Australia'], correct: 0 },
+            { q: 'What does "X-Factor" mean in the global network?', options: ['The biggest factory in the world', 'Small choices that have big effects', 'The fastest ship'], correct: 1 }
+        ];
+
+        let quizScore = 0;
+        let quizAnswered = 0;
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            container.innerHTML = '';
+            quizScore = 0;
+            quizAnswered = 0;
+            document.getElementById('quiz-score').innerText = '';
+
+            quizData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.className = 'quiz-question-box';
+                div.innerHTML = `<h3>Q${index + 1}: ${item.q}</h3>`;
+                const optDiv = document.createElement('div');
+                optDiv.className = 'options-grid';
+                item.options.forEach((opt, optIndex) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'option-btn';
+                    btn.innerText = opt;
+                    btn.onclick = () => answerQuiz(index, optIndex, btn, div);
+                    optDiv.appendChild(btn);
+                });
+                div.appendChild(optDiv);
+                const feedback = document.createElement('div');
+                feedback.className = 'quiz-feedback';
+                div.appendChild(feedback);
+                container.appendChild(div);
+            });
+        }
+
+        function answerQuiz(qIndex, optIndex, btn, parentDiv) {
+            if (parentDiv.dataset.answered) return;
+            parentDiv.dataset.answered = 'true';
+            const item = quizData[qIndex];
+            const feedback = parentDiv.querySelector('.quiz-feedback');
+
+            if (optIndex === item.correct) {
+                btn.classList.add('correct');
+                feedback.innerText = '✅ Correct!';
+                feedback.style.color = 'var(--green)';
+                quizScore++;
+            } else {
+                btn.classList.add('wrong');
+                feedback.innerText = '❌ Not quite. The correct answer was: ' + item.options[item.correct];
+                feedback.style.color = 'var(--red)';
+                parentDiv.querySelectorAll('.option-btn').forEach((b, i) => {
+                    if (i === item.correct) b.classList.add('correct');
+                });
+            }
+
+            quizAnswered++;
+            if (quizAnswered === quizData.length) {
+                document.getElementById('quiz-score').innerText = `You scored ${quizScore} out of ${quizData.length}! ${quizScore === 5 ? '🏆 Perfect!' : 'Keep exploring!'}`;
+                document.getElementById('quiz-score').style.color = 'var(--yellow)';
+            }
+        }
+
+        // ============================================
+        // 10. CHECKLIST
+        // ============================================
+        function toggleCheck(element) {
+            element.classList.toggle('completed');
+        }
+
+        // ============================================
+        // 11. REFLECTION
+        // ============================================
+        function updateWordCount() {
+            const text = document.getElementById('reflection-text').value;
+            const words = text.trim().split(/\s+/).filter(w => w.length > 0).length;
+            document.getElementById('word-count').innerText = words + ' words';
+        }
+
+        function submitReflection() {
+            const text = document.getElementById('reflection-text').value;
+            const msg = document.getElementById('reflection-msg');
+            
+            if (text.length < 30) {
+                msg.style.color = 'var(--red)';
+                msg.innerText = "Please write a bit more! Try to explain what would change most and why.";
+            } else {
+                msg.style.color = 'var(--green)';
+                msg.innerText = "✅ Excellent reflection! You have successfully explained how your day depends on global connections.";
+                document.getElementById('reflection-text').disabled = true;
+                document.querySelector('#reflection button').disabled = true;
+                document.querySelector('#reflection button').innerText = "Submitted!";
+                document.querySelector('#reflection button').style.background = "var(--green)";
+            }
+        }
+
+        // ============================================
+        // INIT
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            renderQuiz();
+        });
+    </script>
+</body>
+</html>
